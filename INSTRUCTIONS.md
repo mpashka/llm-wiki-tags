@@ -12,8 +12,9 @@ to satisfy these rules. Make the changes as a normal edit to the repo.
 
 ## Concept
 
-Keep the docs as an LLM-readable wiki (llm-wiki), and add **tags** that link code
-and documentation across the directory tree.
+Keep the docs as an LLM-readable wiki (llm-wiki —
+[original gist by Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)),
+and add **tags** that link code and documentation across the directory tree.
 
 A **tag** is a short kebab-case slug (`[a-z0-9-]+`) written as the token
 `@tag:<slug>`. The **same tag is placed in both code and documentation**, so a

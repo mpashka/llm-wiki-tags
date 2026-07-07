@@ -7,8 +7,9 @@
 
 ## What it is
 
-**llm-wiki** is Andrej Karpathy's idea of keeping a codebase's documentation as
-an *LLM-readable wiki*: every meaningful directory carries an `index.md`, pages
+**llm-wiki** ([original gist by Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f))
+is the idea of keeping a codebase's documentation as an *LLM-readable wiki*:
+every meaningful directory carries an `index.md`, pages
 are small and single-purpose, links are bidirectional (parent ⇄ child), and one
 page owns each detail. An agent navigates the tree top-down through `index.md`
 files instead of blindly grepping.
