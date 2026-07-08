@@ -1,6 +1,16 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI coding agents when working with code in this
+repository. (`CLAUDE.md` points here.)
+
+## Tooling
+
+**Use the IntelliJ IDEA MCP (`mcp__idea__*`) for working with code and files** in
+this repository — reading (`mcp__idea__read_file`), searching
+(`mcp__idea__search_text` / `search_regex`), and editing
+(`mcp__idea__apply_patch` / `create_new_file`) — in preference to raw shell
+(`cat`, `sed`, `grep`) so edits go through the IDE and pick up its
+reformatting/linting.
 
 ## What this repo is
 
