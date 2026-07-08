@@ -1,11 +1,11 @@
-# Install llm-wiki-plus (agent instructions)
+# Install llm-wiki-tags (agent instructions)
 
-> # llm-wiki-plus IS THE SAME **llm-wiki** BY ANDREJ KARPATHY — WITH **TAGS**.
+> # llm-wiki-tags IS THE SAME **llm-wiki** BY ANDREJ KARPATHY — WITH **TAGS**.
 
 *Languages: **English** · [Русский](INSTRUCTIONS.ru.md) — About:
 [English](README.md) · [Русский](README.ru.md)*
 
-You are an AI coding agent. The user asked you to **install llm-wiki-plus** into
+You are an AI coding agent. The user asked you to **install llm-wiki-tags** into
 the current repository. Follow the steps below, adapting paths and comment syntax
 to the repo. Do not restructure or rewrite existing content beyond what is needed
 to satisfy these rules. Make the changes as a normal edit to the repo.
@@ -43,21 +43,45 @@ concept spanning several files/folders is reachable in one search.
 
 ### 3. Place tags
 
-- When a concept spans **both code and docs**, choose a slug, register it in
-  `docs/tags.md`, and place `@tag:<slug>` on the relevant locations:
-  - **doc file/dir**: a `@tag:<slug>` line near the top of the `.md` (for a
-    directory, in its `index.md`);
-  - **code file/dir**: a top-of-file comment in the language's syntax containing
-    the token (`// @tag:<slug>`, `# @tag:<slug>`, `/* @tag:<slug> */`); for a
-    directory, in its main module's leading comment or its `index.md`.
+When a concept spans **both code and docs**, choose a slug, register it in
+`docs/tags.md`, and place the `@tag:<slug>` token at the relevant locations.
+Always keep the literal `@tag:<slug>` token (not a bare slug list) — that is what
+lets one `grep` find the same concept in code and docs alike.
+
+**Documentation** — put the tag in **YAML front matter** at the very top of the
+`.md`, in a `tags` field holding the space-separated tokens:
+
+```markdown
+---
+tags: "@tag:payments @tag:retry"
+---
+```
+
+- **A doc file**: front matter at the top of that file.
+- **A doc directory**: front matter in that directory's `index.md`.
+- **Part of a doc file**: if a tag applies only to one section, put a
+  `@tag:<slug>` line in the body next to that section instead of the front matter.
+
+**Code** — put the tag in a comment in the language's syntax, immediately above
+the element. A tag can mark four granularities: a **package**, a **file**, a
+**class** (or its equivalent) or a **method/function**. Per-language rules:
+
+- [`languages/java.md`](languages/java.md)
+- [`languages/python.md`](languages/python.md)
+- [`languages/golang.md`](languages/golang.md)
+
+For any other language, apply the same idea: `@tag:<slug>` in a comment
+(`// `, `# `, `/* */`) directly above the package, file, class-equivalent or
+function it marks.
+
 - Multiple tags: space-separate the token, e.g. `@tag:ui @tag:mechanism`.
 - Do **not** invent tags for one-off details; tags are for cross-cutting concepts
   that recur across code and docs.
 
 ### 4. Record the convention for future agents
 
-- In the repository's agent guide (`AGENTS.md`, else `CLAUDE.md`, else create
-  `AGENTS.md`), add an **"llm-wiki-plus"** section stating the rules and
+- In the repository's agent guide (`AGENTS.md`, else `AGENTS.md`, else create
+  `AGENTS.md`), add an **"llm-wiki-tags"** section stating the rules and
   imperatives below, and link to `docs/tags.md`. This is what makes the
   convention stick.
 

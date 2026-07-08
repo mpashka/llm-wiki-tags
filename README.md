@@ -1,6 +1,6 @@
-# llm-wiki-plus
+# llm-wiki-tags
 
-> # llm-wiki-plus IS THE SAME **llm-wiki** BY ANDREJ KARPATHY — WITH **TAGS**.
+> # llm-wiki-tags IS THE SAME **llm-wiki** BY ANDREJ KARPATHY — WITH **TAGS**.
 
 *Languages: **English** · [Русский](README.ru.md) — Agent instructions:
 [English](INSTRUCTIONS.md) · [Русский](INSTRUCTIONS.ru.md)*
@@ -14,7 +14,7 @@ are small and single-purpose, links are bidirectional (parent ⇄ child), and on
 page owns each detail. An agent navigates the tree top-down through `index.md`
 files instead of blindly grepping.
 
-**llm-wiki-plus** is exactly that, **plus tags** — nothing about llm-wiki
+**llm-wiki-tags** is exactly that, **plus tags** — nothing about llm-wiki
 changes; tags are added on top.
 
 ## What "+ tags" adds
@@ -37,12 +37,24 @@ step.
 
 ### Tag format
 
-- **Documentation** (`.md`): a line `@tag:<slug>` near the top of the file; for a
-  directory, in that directory's `index.md`.
-- **Code**: a comment near the top of the file in the language's comment syntax
-  containing the token, e.g. `// @tag:<slug>`, `# @tag:<slug>`, `/* @tag:<slug> */`.
+Slugs are lowercase kebab-case (`[a-z0-9-]+`); the same `@tag:<slug>` token is
+placed in both code and docs.
+
+- **Documentation** (`.md`): in **YAML front matter** at the top of the file, a
+  `tags` field holding the space-separated tokens; for a directory, in that
+  directory's `index.md`. A tag that applies to just one section may instead sit
+  as a `@tag:<slug>` line in the body next to it.
+  ```
+  ---
+  tags: "@tag:payments @tag:retry"
+  ---
+  ```
+- **Code**: a comment in the language's syntax containing the token, placed above
+  the element. A tag can mark a **package**, a **file**, a **class** (or
+  equivalent) or a **method/function**. Per-language rules live in
+  [`languages/`](languages/index.md) — [Java](languages/java.md),
+  [Python](languages/python.md), [Go](languages/golang.md).
 - **Multiple tags**: repeat the token, space-separated: `@tag:ui @tag:mechanism`.
-- **Slugs** are lowercase kebab-case: `[a-z0-9-]+`.
 
 ### Searching
 
@@ -61,7 +73,7 @@ Every tag is registered once in `docs/tags.md` with a one-line description.
 
 ## The index.md rules
 
-llm-wiki-plus keeps (and makes explicit) llm-wiki's documentation rules:
+llm-wiki-tags keeps (and makes explicit) llm-wiki's documentation rules:
 
 1. **Every meaningful directory has an `index.md`** giving a **one-line
    description of each file and each sub-directory** in that folder.
@@ -80,9 +92,9 @@ llm-wiki-plus keeps (and makes explicit) llm-wiki's documentation rules:
 Point your coding agent at the instruction page and ask it to install:
 
 ```
-поставь https://github.com/mpashka/llm-wiki-plus/blob/main/INSTRUCTIONS.md
+поставь https://github.com/mpashka/llm-wiki-tags/blob/main/INSTRUCTIONS.md
 # or, in English:
-install https://github.com/mpashka/llm-wiki-plus/blob/main/INSTRUCTIONS.md
+install https://github.com/mpashka/llm-wiki-tags/blob/main/INSTRUCTIONS.md
 ```
 
 The agent reads [`INSTRUCTIONS.md`](INSTRUCTIONS.md) (or
