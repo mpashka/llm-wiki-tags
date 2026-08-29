@@ -29,7 +29,10 @@ tags you can:
 - **see which tags a piece of code has** — read the tags at the top of a file or
   directory to learn which cross-cutting concepts it participates in;
 - **see which tags a document has** — the same, for a doc page;
-- keep a single **tag registry** (`docs/tags.md`) describing what each tag means.
+- keep a single **tag registry** (`docs/tags.md`) describing what each tag means;
+- **lay the documentation out by tag** — `docs/specification/`,
+  `docs/implementation/` and `docs/testing/` follow the tag hierarchy, so the
+  page describing a concept is where its tag says it is.
 
 Tags complement `index.md` navigation (which follows the directory tree) with a
 second, orthogonal axis: a concept that spans several folders is reachable in one
@@ -37,7 +40,8 @@ step.
 
 ### Tag format
 
-Slugs are lowercase kebab-case (`[a-z0-9-]+`); the same `@tag:<slug>` token is
+Slugs are lowercase kebab-case (`[a-z0-9-]+`) and may be **hierarchical**, with
+`/` as the separator (`@tag:payments/retry`); the same `@tag:<slug>` token is
 placed in both code and docs.
 
 - **Documentation** (`.md`): in **YAML front matter** at the top of the file, a
@@ -55,18 +59,21 @@ placed in both code and docs.
   [`languages/`](languages/index.md) — [Java](languages/java.md),
   [Python](languages/python.md), [Go](languages/golang.md).
 - **Multiple tags**: repeat the token, space-separated: `@tag:ui @tag:mechanism`.
+- **Hierarchy**: `@tag:payments/retry` is a child of `@tag:payments`; one search
+  for the parent finds the parent and every child. Hierarchy is preferred over
+  long flat slugs, and it mirrors the documentation tree.
 
 ### Searching
 
 ```bash
-# every code + doc location that carries a tag
-grep -rn "@tag:<slug>" .
+# every code + doc location that carries a tag (and its children)
+grep -rn "@tag:payments" .
 
 # which tags a given file has
-grep -oE "@tag:[a-z0-9-]+" path/to/file
+grep -oE "@tag:[a-z0-9/-]+" path/to/file
 
 # every tag used in the repo
-grep -rhoE "@tag:[a-z0-9-]+" . | sort -u
+grep -rhoE "@tag:[a-z0-9/-]+" . | sort -u
 ```
 
 Every tag is registered once in `docs/tags.md` with a one-line description.
@@ -87,6 +94,64 @@ llm-wiki-tags keeps (and makes explicit) llm-wiki's documentation rules:
 6. **Update as you go**: during or after the task, update the affected `index.md`
    files (and tags) in the same change.
 
+## Documentation layout
+
+llm-wiki-tags also fixes **where** the pages live, so that both a human and an
+agent can guess the path of a page from the concept it describes:
+
+```
+docs/
+├── index.md                      # index of the documentation
+├── tags.md                       # tag registry
+├── specification/                # what the program looks like from outside
+│   ├── index.md
+│   ├── payments.md               # a small area: one page
+│   └── payments/                 # a grown area: a directory with its own index.md
+│       ├── index.md
+│       └── retry.md
+├── implementation/               # how it is built inside — same shape
+├── testing/                      # how it is tested: strategy, test cases
+└── requests/                     # working files of individual tasks
+    └── <task_name>/              # request.md, plan.md, debug scripts, notes
+```
+
+- **All documentation lives under `docs/`.** The repository root keeps only what
+  must be there: `AGENTS.md`, `CLAUDE.md`, the readme, the license, and files
+  tooling requires at the root (`package.json`, `go.mod`, `Makefile`, CI config…).
+- **Three views, one page each**: `specification/` — the outside view;
+  `implementation/` — the inside view; `testing/` — how it is tested.
+- **Organised by tag, hierarchically**: `@tag:payments/retry` ↔
+  `docs/implementation/payments/retry.md`. Naming a file after a tag is preferred
+  but not required — use the tag as the name when it is the page's main subject;
+  a page usually carries several tags in its front matter.
+- **Per-task working files go to `docs/requests/<task_name>/`** — the task
+  statement, the plan, debug scripts. Whatever outlives the task moves into
+  `specification/`, `implementation/` or `testing/` in the same change; the
+  request folder stays as history.
+
+## Where the rules live
+
+Installing llm-wiki-tags writes the convention into the repository's **rules** —
+`.claude/rules/llm-wiki-tags/`, which Claude Code loads on every task:
+
+```
+.claude/rules/llm-wiki-tags/
+├── wiki.md               # index.md rules, read before you act, update as you go
+├── docs-layout.md        # the docs/ tree above
+├── tags.md               # tag format, registry, search commands
+├── code-tags-java.md     # paths: ["**/*.java"]   — loaded only when Java is touched
+├── code-tags-python.md   # paths: ["**/*.py"]
+└── code-tags-golang.md   # paths: ["**/*.go"]
+```
+
+These files are shipped ready-made in [`rules/`](rules/index.md) (each with a
+Russian twin) and copied **verbatim** — the installing agent does not paraphrase
+the convention, so every repository ends up with the same wording. A rule file
+with a `paths:` field in its front matter is loaded only when a matching file is
+in play, so per-language rules cost nothing until they apply. Agents that do not
+read `.claude/rules/` are served by a short "llm-wiki-tags" section in `AGENTS.md`
+that points at these files.
+
 ## How to adopt it
 
 Point your coding agent at the instruction page and ask it to install:
@@ -98,10 +163,18 @@ install https://github.com/mpashka/llm-wiki-tags/blob/main/INSTRUCTIONS.md
 ```
 
 The agent reads [`INSTRUCTIONS.md`](INSTRUCTIONS.md) (or
-[`INSTRUCTIONS.ru.md`](INSTRUCTIONS.ru.md)) and sets up the `index.md` tree, the
-tag mechanism and the `docs/tags.md` registry in the current repository, and
-records the convention in the repo's agent guide so future agents keep following
-it.
+[`INSTRUCTIONS.ru.md`](INSTRUCTIONS.ru.md)) and sets up the `docs/` layout, the
+`index.md` tree, the tag mechanism and the `docs/tags.md` registry in the current
+repository, then installs the convention as rules in
+`.claude/rules/llm-wiki-tags/` (plus a pointer in the repo's agent guide) so
+future agents keep following it.
+
+## Versions
+
+What changed in each version is in
+[`RELEASE-NOTES.md`](RELEASE-NOTES.md). To move an already-configured
+repository to a newer version, point your agent at
+[`INSTRUCTIONS.md`](INSTRUCTIONS.md) again.
 
 ## License
 

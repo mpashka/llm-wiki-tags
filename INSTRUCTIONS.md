@@ -16,98 +16,104 @@ Keep the docs as an LLM-readable wiki (llm-wiki —
 [original gist by Andrej Karpathy](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)),
 and add **tags** that link code and documentation across the directory tree.
 
-A **tag** is a short kebab-case slug (`[a-z0-9-]+`) written as the token
-`@tag:<slug>`. The **same tag is placed in both code and documentation**, so a
-concept spanning several files/folders is reachable in one search.
+A **tag** is a short kebab-case slug (`[a-z0-9-]+`, hierarchical with `/`)
+written as the token `@tag:<slug>`. The **same tag is placed in both code and
+documentation**, so a concept spanning several files/folders is reachable in one
+search.
+
+The convention ships as **rule files**. You install them into the repository
+first (step 1) and then apply them — the rules are the canonical wording, this
+page is only the procedure.
 
 ## Steps
 
-### 1. Establish the index.md tree
+### 1. Install the rule files
 
-- Ensure **every meaningful directory has an `index.md`**. Create the missing
-  ones.
-- Each `index.md` gives a **one-line description of each file and each
-  sub-directory** in that folder, and links to its parent index and child
-  indexes (bidirectional navigation).
-- Index pages describe stable concepts, not changelogs. Prefer many small pages;
-  put local detail next to the code it describes. One page owns a detail; others
-  link to it.
+Copy the files from [`rules/`](rules/index.md) into
+`.claude/rules/llm-wiki-tags/` **verbatim** — do not paraphrase them. Claude Code
+loads every `.md` under `.claude/rules/` on each task, which is what makes the
+convention stick. Fetch them from
+`https://raw.githubusercontent.com/mpashka/llm-wiki-tags/main/rules/<file>`.
 
-### 2. Create the tag registry
+Always:
 
-- Create `docs/tags.md` (use the repo's docs directory if it differs). It lists
-  every tag with a one-line description of the concept it links, and documents
-  the tag format and search commands (copy the "Tag format" and "Searching"
-  sections from [`README.md`](README.md)).
-- Add `docs/tags.md` to the docs `index.md`.
+| Source | Install as |
+| --- | --- |
+| `rules/wiki.md` | `.claude/rules/llm-wiki-tags/wiki.md` |
+| `rules/docs-layout.md` | `.claude/rules/llm-wiki-tags/docs-layout.md` |
+| `rules/tags.md` | `.claude/rules/llm-wiki-tags/tags.md` |
 
-### 3. Place tags
+Plus one `code-tags-<lang>.md` per language the repository actually uses —
+`rules/code-tags-java.md`, `code-tags-python.md`, `code-tags-golang.md` — and
+none for languages it does not. Each carries a `paths:` field in its front
+matter, so it is loaded only when a file of that language is touched.
 
-When a concept spans **both code and docs**, choose a slug, register it in
-`docs/tags.md`, and place the `@tag:<slug>` token at the relevant locations.
-Always keep the literal `@tag:<slug>` token (not a bare slug list) — that is what
-lets one `grep` find the same concept in code and docs alike.
+- **Language of the rules**: each file has a `.ru.md` twin. Install the twin that
+  matches the language of the repository's documentation, dropping `.ru` from the
+  installed file name.
+- **A language with no ready file**: write one after the same pattern from
+  [`languages/`](languages/index.md), with the right `paths:` glob
+  (`paths: "**/*.ts, **/*.tsx"` — a list or a comma-separated string).
+- **Adapt after copying, not instead of it**: if the repo's docs directory is not
+  `docs/`, or a rule genuinely does not fit, edit the installed file and say so in
+  your report.
 
-**Documentation** — put the tag in **YAML front matter** at the very top of the
-`.md`, in a `tags` field holding the space-separated tokens:
+Now read what you installed and apply it in the steps below.
 
-```markdown
----
-tags: "@tag:payments @tag:retry"
----
-```
+### 2. Lay out the documentation — `docs-layout.md`
 
-- **A doc file**: front matter at the top of that file.
-- **A doc directory**: front matter in that directory's `index.md`.
-- **Part of a doc file**: if a tag applies only to one section, put a
-  `@tag:<slug>` line in the body next to that section instead of the front matter.
+Create the `docs/` tree: `specification/` (the outside view), `implementation/`
+(the inside view), `testing/`, `requests/` (per-task working files). Move stray
+docs out of the repository root into it, fixing the links; leave a page at the
+root only when tooling or an external URL requires it. Keep an existing docs
+directory's name if the repo already has one.
 
-**Code** — put the tag in a comment in the language's syntax, immediately above
-the element. A tag can mark four granularities: a **package**, a **file**, a
-**class** (or its equivalent) or a **method/function**. Per-language rules:
+### 3. Establish the `index.md` tree — `wiki.md`
 
-- [`languages/java.md`](languages/java.md)
-- [`languages/python.md`](languages/python.md)
-- [`languages/golang.md`](languages/golang.md)
+Ensure every meaningful directory — under `docs/` and in the code tree alike —
+has an `index.md` with a one-line description of each file and sub-directory in
+it, linking to its parent index and its child indexes. Create the missing ones.
 
-For any other language, apply the same idea: `@tag:<slug>` in a comment
-(`// `, `# `, `/* */`) directly above the package, file, class-equivalent or
-function it marks.
+### 4. Create the tag registry — `tags.md`
 
-- Multiple tags: space-separate the token, e.g. `@tag:ui @tag:mechanism`.
-- Do **not** invent tags for one-off details; tags are for cross-cutting concepts
-  that recur across code and docs.
+Create `docs/tags.md`: every tag with a one-line description of the concept it
+links, laid out hierarchically, plus the tag format and the search commands
+(copy the "Tag format" and "Searching" sections from [`README.md`](README.md)).
+Add it to `docs/index.md`.
 
-### 4. Record the convention for future agents
+### 5. Place tags — `tags.md`, `code-tags-<lang>.md`
 
-- In the repository's agent guide (`AGENTS.md`, else `AGENTS.md`, else create
-  `AGENTS.md`), add an **"llm-wiki-tags"** section stating the rules and
-  imperatives below, and link to `docs/tags.md`. This is what makes the
-  convention stick.
+For each concept that spans **both code and docs**: choose a slug, register it in
+`docs/tags.md`, then put the literal `@tag:<slug>` token in the docs (YAML front
+matter, or a body line for a single section) and in the code (a comment above the
+package, file, class or function). Prefer hierarchy — `@tag:payments/retry` —
+over long flat slugs, and do not invent tags for one-off details.
 
-## Imperatives to record (and to follow yourself)
+### 6. Record the convention for other agents
 
-- **Documentation is an LLM wiki.** Every meaningful directory has an `index.md`
-  with a one-line description of each file and sub-directory; keep bidirectional
-  links; one page owns each detail.
-- **Read before you act.** Before a task, follow `index.md` files from the
-  nearest directory down to the code you will touch.
-- **Update as you go.** During or after a task, update the affected `index.md`
-  files in the same change (files added, moved, removed, or repurposed).
-- **Tag cross-cutting concepts.** When a concept spans code and docs, create a
-  tag, register it in `docs/tags.md`, place `@tag:<slug>` on the code and doc
-  locations, and keep the registry current.
+Agents other than Claude Code do not read `.claude/rules/`. In the repository's
+agent guide (`AGENTS.md`, else create it), add a short **"llm-wiki-tags"**
+section: five or six lines summarising the installed rules, plus links to
+`.claude/rules/llm-wiki-tags/` and `docs/tags.md`. Keep the detail in the rule
+files — the guide points at them, it does not duplicate them.
 
-## Search commands
+## In brief (the canonical wording is in the rule files)
 
-```bash
-grep -rn "@tag:<slug>" .                     # all locations of a tag
-grep -oE "@tag:[a-z0-9-]+" path/to/file      # tags on a file
-grep -rhoE "@tag:[a-z0-9-]+" . | sort -u     # all tags in the repo
-```
+- **Documentation is an LLM wiki**: an `index.md` per meaningful directory,
+  bidirectional links, one page owns each detail.
+- **All docs live under `docs/`** — `specification/`, `implementation/`,
+  `testing/`, organised by tag and hierarchical where possible; the root keeps
+  only the files that must be there.
+- **Task working files go to `docs/requests/<task_name>/`** (`request.md`,
+  `plan.md`, debug scripts) — not to the root, not next to the code.
+- **Read before you act; update as you go.** Documentation that no longer matches
+  the code is a defect.
+- **Tag cross-cutting concepts** and keep `docs/tags.md` current.
 
 ## Done
 
-After installing, tell the user what you created/changed: the `index.md` files
-added, `docs/tags.md`, any tags placed, and the agent-guide section. From now on,
-follow the imperatives above on every task in this repository.
+After installing, tell the user what you created/changed: the rule files under
+`.claude/rules/llm-wiki-tags/` (and which languages), the `docs/` layout, the
+`index.md` files added, `docs/tags.md`, any tags placed, and the agent-guide
+section. From now on, follow the installed rules on every task in this
+repository.

@@ -12,6 +12,11 @@
 тэги в теле) см. [`INSTRUCTIONS.ru.md`](../INSTRUCTIONS.ru.md) /
 [`INSTRUCTIONS.md`](../INSTRUCTIONS.md) и [`README.ru.md`](../README.ru.md).
 
+Эти страницы — справочник прозой. Устанавливаемая форма тех же правил —
+`code-tags-java.md`, `code-tags-python.md`, `code-tags-golang.md`: сжато и с
+глобом в `paths:` — лежит в [`rules/`](../rules/index.ru.md). Новый язык сначала
+описывается страницей здесь, потом файлом правил там.
+
 ## Файлы
 
 - [`java.md`](java.md) — тэги в Java (`//`, `/* */`, Javadoc; `package-info.java`).

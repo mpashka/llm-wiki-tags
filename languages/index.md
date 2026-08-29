@@ -12,6 +12,11 @@ For the overall mechanism and for **documentation** tagging (YAML front matter,
 `index.md`, body tags) see [`INSTRUCTIONS.md`](../INSTRUCTIONS.md) /
 [`INSTRUCTIONS.ru.md`](../INSTRUCTIONS.ru.md) and [`README.md`](../README.md).
 
+These pages are the prose reference. The installable form of the same rules —
+`code-tags-java.md`, `code-tags-python.md`, `code-tags-golang.md`, condensed and
+carrying a `paths:` glob — is in [`rules/`](../rules/index.md). Write a new
+language page here first, then its rule file there.
+
 ## Files
 
 - [`java.md`](java.md) — tags in Java (`//`, `/* */`, Javadoc; `package-info.java`).
