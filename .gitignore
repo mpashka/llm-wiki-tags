@@ -4,3 +4,6 @@
 
 # IntelliJ IDEA project files.
 .idea/
+
+# Drafts of promotion posts — local only.
+.promotion/
