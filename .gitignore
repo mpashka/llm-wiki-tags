@@ -1,3 +1,6 @@
 # Per-developer Claude Code settings. This repo installs no rules of its own —
 # the shipped rule files live in rules/ and are copied into other repositories.
 .claude/
+
+# IntelliJ IDEA project files.
+.idea/
