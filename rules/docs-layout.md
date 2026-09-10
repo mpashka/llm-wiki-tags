@@ -4,12 +4,14 @@ description: "All documentation lives under docs/ — specification, implementat
 
 # llm-wiki-tags — documentation layout
 
-Companion rules: [`wiki.md`](wiki.md) (index rules), [`tags.md`](tags.md) (tags).
+Companion rules: [`wiki.md`](wiki.md) (index rules), [`tags.md`](tags.md) (tags),
+[`glossary.md`](glossary.md) (terms).
 
 ```
 docs/
 ├── index.md                      # index of the documentation
 ├── tags.md                       # tag registry
+├── terms.md                      # glossary: one concept — one word
 ├── specification/                # what the program looks like from outside
 │   ├── index.md
 │   ├── payments.md               # a small area: one page

@@ -34,7 +34,9 @@ place a concept lives, independently of the directory tree. Companion rules:
 
 Every tag is registered once in `docs/tags.md` with a one-line description of the
 concept it links. Register the tag before placing it, and keep the registry
-current when tags are added, renamed or retired.
+current when tags are added, renamed or retired. When the concept is also a
+glossary term, the description links to its entry in `docs/terms.md` instead of
+defining it again (see [`glossary.md`](glossary.md)).
 
 Do **not** invent tags for one-off details — a tag is for a cross-cutting concept
 that recurs across code and docs.

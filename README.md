@@ -103,6 +103,7 @@ agent can guess the path of a page from the concept it describes:
 docs/
 ├── index.md                      # index of the documentation
 ├── tags.md                       # tag registry
+├── terms.md                      # glossary: one concept — one word
 ├── specification/                # what the program looks like from outside
 │   ├── index.md
 │   ├── payments.md               # a small area: one page
@@ -128,6 +129,10 @@ docs/
   statement, the plan, debug scripts. Whatever outlives the task moves into
   `specification/`, `implementation/` or `testing/` in the same change; the
   request folder stays as history.
+- **One concept — one word**: `docs/terms.md` is the glossary — for each concept,
+  the main term, the synonyms it replaces, a short definition and a link to the
+  owning page. A new name is introduced only after searching the glossary by
+  meaning; a new name for an old concept becomes a synonym.
 
 ## Where the rules live
 
@@ -139,6 +144,7 @@ Installing llm-wiki-tags writes the convention into the repository's **rules** �
 ├── wiki.md               # index.md rules, read before you act, update as you go
 ├── docs-layout.md        # the docs/ tree above
 ├── tags.md               # tag format, registry, search commands
+├── glossary.md           # docs/terms.md: search before naming, one definition
 ├── code-tags-java.md     # paths: ["**/*.java"]   — loaded only when Java is touched
 ├── code-tags-python.md   # paths: ["**/*.py"]
 └── code-tags-golang.md   # paths: ["**/*.go"]
@@ -164,8 +170,8 @@ install https://github.com/mpashka/llm-wiki-tags/blob/main/INSTRUCTIONS.md
 
 The agent reads [`INSTRUCTIONS.md`](INSTRUCTIONS.md) (or
 [`INSTRUCTIONS.ru.md`](INSTRUCTIONS.ru.md)) and sets up the `docs/` layout, the
-`index.md` tree, the tag mechanism and the `docs/tags.md` registry in the current
-repository, then installs the convention as rules in
+`index.md` tree, the tag mechanism, the `docs/tags.md` registry and the
+`docs/terms.md` glossary in the current repository, then installs the convention as rules in
 `.claude/rules/llm-wiki-tags/` (plus a pointer in the repo's agent guide) so
 future agents keep following it.
 

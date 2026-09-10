@@ -22,6 +22,8 @@ Always loaded:
   implementation, testing, requests.
 - [`tags.md`](tags.md) — tag format, hierarchy, the `docs/tags.md` registry,
   search commands.
+- [`glossary.md`](glossary.md) — the `docs/terms.md` glossary: search by meaning
+  before naming, one definition per term, synonyms point to the main term.
 
 Loaded per language (copy only the ones the repository uses):
 

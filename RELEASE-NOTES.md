@@ -8,6 +8,19 @@ pages an agent installs from. To move an installed repository to a newer version
 point your agent at [`INSTRUCTIONS.md`](INSTRUCTIONS.md) again — it re-copies the
 rule files over the old ones.
 
+## v0.3.0
+
+**Glossary.** A new always-loaded rule, [`glossary.md`](rules/glossary.md), and a
+new page, `docs/terms.md`: one concept — one word, in code, docs and task
+statements alike. Each entry gives the main term, the synonyms it replaces, a
+short definition and a link to the owning page. A new name is introduced only
+after searching the glossary by meaning, and a new name for an old concept is
+recorded as a synonym instead of becoming a second concept. The tag registry links
+to a glossary entry instead of defining the concept again.
+
+To upgrade, point your agent at [`INSTRUCTIONS.md`](INSTRUCTIONS.md) again: it
+installs `glossary.md` next to the other rule files and seeds `docs/terms.md`.
+
 ## v0.2.0
 
 **Documentation layout.** The convention now says *where* pages live, not only

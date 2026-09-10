@@ -31,8 +31,8 @@ in *both* code and docs to link cross-cutting concepts across the directory tree
   *another* repo. This is the primary product.
 - `rules/` — the second half of the payload: ready-made rule files that an
   installing agent copies **verbatim** into a target repo as
-  `.claude/rules/llm-wiki-tags/` (`wiki.md`, `docs-layout.md`, `tags.md`, and
-  `code-tags-java|python|golang.md` carrying a `paths:` glob), each with a
+  `.claude/rules/llm-wiki-tags/` (`wiki.md`, `docs-layout.md`, `tags.md`,
+  `glossary.md`, and `code-tags-java|python|golang.md` carrying a `paths:` glob), each with a
   `.ru.md` twin, plus its own `index.md` / `index.ru.md`. **This is the canonical
   wording of the convention** — the READMEs describe it, these files state it.
 - `index.md` — the repo's own navigation index. English-only (there is no

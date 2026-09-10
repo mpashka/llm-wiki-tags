@@ -5,12 +5,13 @@ description: "Вся документация лежит в docs/ — specificat
 # llm-wiki-tags — раскладка документации
 
 Соседние правила: [`wiki.md`](wiki.md) (правила индексов), [`tags.md`](tags.md)
-(тэги).
+(тэги), [`glossary.md`](glossary.md) (термины).
 
 ```
 docs/
 ├── index.md                      # индекс документации
 ├── tags.md                       # реестр тэгов
+├── terms.md                      # словарь терминов: одно понятие — одно слово
 ├── specification/                # как программа выглядит снаружи
 │   ├── index.md
 │   ├── payments.md               # небольшая область: одна страница
