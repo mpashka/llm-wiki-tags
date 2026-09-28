@@ -8,6 +8,23 @@ pages an agent installs from. To move an installed repository to a newer version
 point your agent at [`INSTRUCTIONS.md`](INSTRUCTIONS.md) again — it re-copies the
 rule files over the old ones.
 
+## v0.4.0
+
+**The system around the program and where to test it.** The `docs/` tree gets a
+fourth view, `docs/external/`: the overall architecture of the system the program
+is part of, its neighbours and the contracts with them — a consumer's knowledge,
+not the neighbours' own documentation. The layout rule now says which diagrams go
+where — the outside architecture (components or deployment, cross-component
+sequences) in `external/`, use cases in `specification/`, classes, states and inner
+sequences in `implementation/` — and that the outside one is drawn first.
+`docs/testing/` now describes test environments, approaches and accounts (as a
+pointer to where the credential is stored), keeps test cases short and moves long
+step descriptions into reference pages.
+
+To upgrade, point your agent at [`INSTRUCTIONS.md`](INSTRUCTIONS.md) again: it
+re-copies `docs-layout.md`; create `docs/external/` when the program has
+neighbours worth describing.
+
 ## v0.3.0
 
 **Glossary.** A new always-loaded rule, [`glossary.md`](rules/glossary.md), and a

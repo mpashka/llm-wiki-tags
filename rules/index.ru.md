@@ -18,7 +18,7 @@ Claude Code подгружает каждый `.md` из `.claude/rules/` про
 Грузятся всегда:
 
 - [`wiki.md`](wiki.md) — дерево `index.md`, «сначала читай», «обновляй по ходу».
-- [`docs-layout.md`](docs-layout.md) — дерево `docs/`: specification,
+- [`docs-layout.md`](docs-layout.md) — дерево `docs/`: external, specification,
   implementation, testing, requests.
 - [`tags.md`](tags.md) — формат тэга, иерархия, реестр `docs/tags.md`, команды
   поиска.

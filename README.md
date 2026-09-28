@@ -30,7 +30,7 @@ tags you can:
   directory to learn which cross-cutting concepts it participates in;
 - **see which tags a document has** — the same, for a doc page;
 - keep a single **tag registry** (`docs/tags.md`) describing what each tag means;
-- **lay the documentation out by tag** — `docs/specification/`,
+- **lay the documentation out by tag** — `docs/external/`, `docs/specification/`,
   `docs/implementation/` and `docs/testing/` follow the tag hierarchy, so the
   page describing a concept is where its tag says it is.
 
@@ -104,6 +104,7 @@ docs/
 ├── index.md                      # index of the documentation
 ├── tags.md                       # tag registry
 ├── terms.md                      # glossary: one concept — one word
+├── external/                     # the system around the program: architecture, neighbours
 ├── specification/                # what the program looks like from outside
 │   ├── index.md
 │   ├── payments.md               # a small area: one page
@@ -111,7 +112,7 @@ docs/
 │       ├── index.md
 │       └── retry.md
 ├── implementation/               # how it is built inside — same shape
-├── testing/                      # how it is tested: strategy, test cases
+├── testing/                      # how it is tested: environments, approaches, test cases
 └── requests/                     # working files of individual tasks
     └── <task_name>/              # request.md, plan.md, debug scripts, notes
 ```
@@ -119,15 +120,20 @@ docs/
 - **All documentation lives under `docs/`.** The repository root keeps only what
   must be there: `AGENTS.md`, `CLAUDE.md`, the readme, the license, and files
   tooling requires at the root (`package.json`, `go.mod`, `Makefile`, CI config…).
-- **Three views, one page each**: `specification/` — the outside view;
-  `implementation/` — the inside view; `testing/` — how it is tested.
+- **Four views, one page each**: `external/` — the system around the program
+  and the outside architecture; `specification/` — the outside view;
+  `implementation/` — the inside view; `testing/` — where and how it is tested:
+  environments, approaches, short test cases.
+- **The outside architecture is drawn before the inside one**: components or
+  deployment and cross-component sequences in `external/`, use cases in
+  `specification/`, classes, states and inner sequences in `implementation/`.
 - **Organised by tag, hierarchically**: `@tag:payments/retry` ↔
   `docs/implementation/payments/retry.md`. Naming a file after a tag is preferred
   but not required — use the tag as the name when it is the page's main subject;
   a page usually carries several tags in its front matter.
 - **Per-task working files go to `docs/requests/<task_name>/`** — the task
   statement, the plan, debug scripts. Whatever outlives the task moves into
-  `specification/`, `implementation/` or `testing/` in the same change; the
+  `external/`, `specification/`, `implementation/` or `testing/` in the same change; the
   request folder stays as history.
 - **One concept — one word**: `docs/terms.md` is the glossary — for each concept,
   the main term, the synonyms it replaces, a short definition and a link to the

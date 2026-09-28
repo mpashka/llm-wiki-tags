@@ -18,7 +18,7 @@ expansion (`paths: "**/*.ts, **/*.tsx"`).
 Always loaded:
 
 - [`wiki.md`](wiki.md) — the `index.md` tree, read before you act, update as you go.
-- [`docs-layout.md`](docs-layout.md) — the `docs/` tree: specification,
+- [`docs-layout.md`](docs-layout.md) — the `docs/` tree: external, specification,
   implementation, testing, requests.
 - [`tags.md`](tags.md) — tag format, hierarchy, the `docs/tags.md` registry,
   search commands.

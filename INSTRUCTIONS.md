@@ -63,7 +63,8 @@ Now read what you installed and apply it in the steps below.
 
 ### 2. Lay out the documentation — `docs-layout.md`
 
-Create the `docs/` tree: `specification/` (the outside view), `implementation/`
+Create the `docs/` tree: `external/` (the system around the program),
+`specification/` (the outside view), `implementation/`
 (the inside view), `testing/`, `requests/` (per-task working files). Move stray
 docs out of the repository root into it, fixing the links; leave a page at the
 root only when tooling or an external URL requires it. Keep an existing docs
@@ -111,8 +112,8 @@ detail in the rule files — the guide points at them, it does not duplicate the
 
 - **Documentation is an LLM wiki**: an `index.md` per meaningful directory,
   bidirectional links, one page owns each detail.
-- **All docs live under `docs/`** — `specification/`, `implementation/`,
-  `testing/`, organised by tag and hierarchical where possible; the root keeps
+- **All docs live under `docs/`** — `external/`, `specification/`,
+  `implementation/`, `testing/`, organised by tag and hierarchical where possible; the root keeps
   only the files that must be there.
 - **Task working files go to `docs/requests/<task_name>/`** (`request.md`,
   `plan.md`, debug scripts) — not to the root, not next to the code.
